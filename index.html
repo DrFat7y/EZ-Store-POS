@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EZ-Store System | النظام الذكي لإدارة المتاجر</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&family=Orbitron:wght@700&display=swap"
+        rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8a2be2;
+            --secondary: #4a148c;
+            --accent: #00d4ff;
+            --dark-bg: #0f0f1a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --text-color: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            background-image: radial-gradient(circle at 10% 20%, rgba(138, 43, 226, 0.2) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 212, 255, 0.15) 0%, transparent 40%);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            background: linear-gradient(45deg, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #aaa;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        /* Cards Container */
+        .container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 20px;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Glass Card */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            width: 350px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .icon-box {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2.5rem;
+            color: var(--accent);
+            transition: 0.3s;
+        }
+
+        .card:hover .icon-box {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .card h2 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .card p {
+            color: #ccc;
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 35px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(138, 43, 226, 0.6);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--accent);
+            box-shadow: none;
+            color: var(--accent);
+        }
+
+        .btn-outline:hover {
+            background: var(--accent);
+            color: var(--dark-bg);
+        }
+
+        /* Footer */
+        footer {
+            margin-top: auto;
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        footer a {
+            color: #888;
+            margin: 0 10px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        footer a:hover {
+            color: var(--accent);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .card {
+                width: 100%;
+                max-width: 400px;
+            }
+        }
+
+        /* Features Section Styles */
+        .features-section {
+            padding: 80px 20px;
+            overflow: hidden;
+        }
+
+        .feature-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 50px;
+            margin-bottom: 80px;
+            flex-wrap: wrap;
+        }
+
+        .feature-row.reverse {
+            flex-direction: row-reverse;
+        }
+
+        .feature-text {
+            flex: 1;
+            max-width: 500px;
+            text-align: right;
+        }
+
+        .feature-text h2 {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .feature-text p {
+            font-size: 1.1rem;
+            color: #ccc;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-list i {
+            color: var(--primary);
+        }
+
+        .feature-visual {
+            flex: 1;
+            max-width: 500px;
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.1), rgba(0, 212, 255, 0.1));
+            border-radius: 30px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .feature-icon-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .mini-feature {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .mini-feature:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .mini-feature i {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 10px;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo"><i class="fas fa-layer-group"></i> EZ-Store</div>
+        <div style="color: #aaa; font-size: 0.9rem;">الإصدار 1.0.0</div>
+    </header>
+
+    <section class="hero" data-aos="zoom-in">
+        <h1>إدارة متجرك <span style="color: var(--accent);">بذكاء</span></h1>
+        <p>نظام متكامل لإدارة المبيعات، المخزون، والتقارير المالية. اختر التطبيق المناسب لبدء العمل.</p>
+        <a href="#downloads" class="btn" style="padding: 15px 40px; font-size: 1.2rem;">ابدأ الآن <i
+                class="fas fa-arrow-down" style="margin-right: 10px;"></i></a>
+    </section>
+
+    <!-- Detailed Features Section -->
+    <section class="features-section">
+
+        <!-- Cashier System Features -->
+        <div class="feature-row" data-aos="fade-right">
+            <div class="feature-text">
+                <h2>أسرع نظام كاشير <br> لإدارة مبيعاتك بدون توقف</h2>
+                <p>صمم خصيصاً ليناسب المحلات التجارية بجميع أنواعها. يجمع بين السهولة والقوة لضمان سير العمل بسرعة
+                    وكفاءة.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-wifi"></i> <strong>يعمل بنظام ذكي (Smart Offline):</strong> لا توقف للعمل
+                        أبداً. يعمل النظام بكفاءة Offline ويقوم بالمزامنة تلقائياً عند توفر الإنترنت.</li>
+                    <li><i class="fas fa-barcode"></i> <strong>دعم الباركود:</strong> سرعة فائقة في إضافة المنتجات
+                        والبيع باستخدام الماسح الضوئي.</li>
+                    <li><i class="fas fa-file-invoice-dollar"></i> <strong>فواتير احترافية:</strong> طباعة فواتير فورية
+                        متوافقة مع الطابعات الحرارية.</li>
+                    <li><i class="fas fa-box-open"></i> <strong>إدارة المخزون:</strong> تنبيهات تلقائية للنواقص ومتابعة
+                        دقيقة لحركة كل صنف.</li>
+                </ul>
+            </div>
+            <div class="feature-visual">
+                <div class="feature-icon-grid">
+                    <div class="mini-feature"><i class="fas fa-bolt"></i><span>سرعة فائقة</span></div>
+                    <div class="mini-feature"><i class="fas fa-shield-alt"></i><span>حماية البيانات</span></div>
+                    <div class="mini-feature"><i class="fas fa-users"></i><span>تعدد المستخدمين</span></div>
+                    <div class="mini-feature"><i class="fas fa-history"></i><span>سجل العمليات</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Owner App Features -->
+        <div class="feature-row reverse" data-aos="fade-left">
+            <div class="feature-text">
+                <h2>راقِب عملك وأرباحك <br> من أي مكان في العالم</h2>
+                <p>تطبيق المدير هو عينك الساهرة على نشاطك التجاري. يوفر لك رؤية كاملة وتحكماً عن بعد، مما يمنحك راحة
+                    البال وحرية الحركة.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-mobile-alt"></i> <strong>إدارة عن بعد:</strong> تابع ملخص المبيعات وأداء فروعك
+                        من أي مكان، ودع العمل يسير تحت ناظريك.</li>
+                    <li><i class="fas fa-chart-line"></i> <strong>تحليلات ذكية:</strong> رسوم بيانية توضح الأرباح،
+                        المنتجات الأكثر مبيعاً، وأداء الكاشير لاتخاذ قرارات دقيقة.</li>
+                    <li><i class="fas fa-bell"></i> <strong>إشعارات هامة:</strong> كن على علم دائم بحالة المخزون وإغلاق
+                        الورديات لضمان سير العمل بانتظام.</li>
+                    <li><i class="fas fa-shield-alt"></i> <strong>حماية وأمان:</strong> بياناتك مشفرة ومحفوظة بأحدث
+                        تقنيات الأمان لضمان خصوصية أعمالك.</li>
+                </ul>
+            </div>
+            <div class="feature-visual">
+                <div class="feature-icon-grid">
+                    <div class="mini-feature"><i class="fas fa-dollar-sign"></i><span>حساب الأرباح</span></div>
+                    <div class="mini-feature"><i class="fas fa-chart-pie"></i><span>تقارير شهرية</span></div>
+                    <div class="mini-feature"><i class="fas fa-user-tie"></i><span>إدارة الموظفين</span></div>
+                    <div class="mini-feature"><i class="fas fa-lock"></i><span>أمان عالي</span></div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <div class="container" id="downloads" data-aos="fade-up">
+        <!-- CH POS Card (Windows Download) -->
+        <div class="card">
+            <div class="icon-box">
+                <i class="fab fa-windows"></i>
+            </div>
+            <h2>نظام الكاشير (Windows)</h2>
+            <p>برنامج إدارة المبيعات والمخزون الكامل. يدعم الفواتير والباركود والعمل بدون إنترنت.</p>
+            <a id="btn-download-windows" href="#" class="btn" target="_blank">
+                <i class="fab fa-windows" style="margin-left: 8px;"></i> تحميل نسخة الويندوز
+            </a>
+        </div>
+
+        <!-- Owner Reports Card (Android Download) -->
+        <div class="card">
+            <div class="icon-box">
+                <i class="fab fa-android"></i>
+            </div>
+            <h2>تطبيق المالك (Android)</h2>
+            <p>تابع مبيعاتك وأرباحك لحظة بلحظة من هاتفك. دعم كامل للتحليلات.</p>
+            <a id="btn-download-android" href="#" class="btn btn-outline" target="_blank">
+                <i class="fab fa-android" style="margin-left: 8px;"></i> تحميل تطبيق المالك
+            </a>
+        </div>
+    </div>
+
+    <!-- Supported Industries Section -->
+    <section id="industries" style="padding: 40px 20px; text-align: center; background: rgba(255, 255, 255, 0.02);"
+        data-aos="fade-up">
+        <h2
+            style="font-size: 2.2rem; margin-bottom: 40px; font-family: 'Orbitron', sans-serif; color: var(--text-color);">
+            البرنامج يدعم مختلف الأنشطة التجارية</h2>
+        <div
+            style="display: flex; gap: 40px; justify-content: center; flex-wrap: wrap; max-width: 1000px; margin: 0 auto;">
+            <!-- Clothing -->
+            <div style="text-align: center;">
+                <div
+                    style="width: 100px; height: 100px; background: rgba(138, 43, 226, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; border: 1px solid rgba(138, 43, 226, 0.3);">
+                    <i class="fas fa-tshirt" style="font-size: 3rem; color: #d6b3ff;"></i>
+                </div>
+                <h3 style="color: #eee; margin-bottom: 5px;">محل ملابس/أحذية</h3>
+            </div>
+            <!-- Supermarket -->
+            <div style="text-align: center;">
+                <div
+                    style="width: 100px; height: 100px; background: rgba(0, 212, 255, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; border: 1px solid rgba(0, 212, 255, 0.3);">
+                    <i class="fas fa-shopping-basket" style="font-size: 3rem; color: #80e5ff;"></i>
+                </div>
+                <h3 style="color: #eee; margin-bottom: 5px;">سوبرماركت/بقالة</h3>
+            </div>
+            <!-- Pharmacy -->
+            <div style="text-align: center;">
+                <div
+                    style="width: 100px; height: 100px; background: rgba(16, 185, 129, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; border: 1px solid rgba(16, 185, 129, 0.3);">
+                    <i class="fas fa-notes-medical" style="font-size: 3rem; color: #6ee7b7;"></i>
+                </div>
+                <h3 style="color: #eee; margin-bottom: 5px;">صيدلية</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <!-- Pricing Section -->
+    <section id="pricing" style="padding: 40px 20px; text-align: center;">
+        <h2 style="font-size: 2.5rem; margin-bottom: 10px; font-family: 'Orbitron', sans-serif; color: var(--text-color);"
+            data-aos="fade-down">باقات الاشتراك</h2>
+        <p style="color: #aaa; margin-bottom: 40px;" data-aos="fade-down" data-aos-delay="100">اختر الخطة المناسبة لحجم
+            نشاطك التجاري</p>
+
+        <div
+            style="display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; text-align: right; max-width: 1200px; margin: 0 auto;">
+            <!-- Plans Injection Point -->
+            <!-- Bronze Plan -->
+            <div class="plan-card"
+                style="border: 1px solid #cd7f32; background: rgba(205, 127, 50, 0.05); padding: 40px; border-radius: 20px; flex: 1; min-width: 300px; position:relative; overflow:hidden; transition: transform 0.3s; backdrop-filter: blur(10px);">
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <div
+                        style="width: 80px; height: 80px; background: rgba(205, 127, 50, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                        <i class="fas fa-medal" style="font-size: 2.5rem; color: #cd7f32;"></i>
+                    </div>
+                    <h3 style="color: #cd7f32; font-size: 2rem; margin: 0;">Bronze</h3>
+                    <p style="color: #aaa;">للبداية القوية</p>
+                </div>
+                <div style="font-size: 2.5rem; font-weight: bold; margin: 20px 0; color:white; text-align:center;">200
+                    <span style="font-size: 1rem; color:#aaa;">ج.م/شهرياً</span>
+                </div>
+                <hr style="border-color: rgba(255,255,255,0.1); margin: 30px 0;">
+                <ul style="list-style:none; padding:0; color: #e2e8f0; line-height: 2.5; font-size: 1.1rem;">
+                    <li><i class="fas fa-check-circle" style="color:#cd7f32; margin-left:10px;"></i> مستخدم واحد (Admin)
+                    </li>
+                    <li><i class="fas fa-check-circle" style="color:#cd7f32; margin-left:10px;"></i> تخزين محلي 100%
+                        (Offline)
+                    </li>
+                    <li><i class="fas fa-check-circle" style="color:#cd7f32; margin-left:10px;"></i> فواتير مبيعات لا
+                        محدودة
+                    </li>
+                    <li><i class="fas fa-check-circle" style="color:#cd7f32; margin-left:10px;"></i> إدارة منتجات ومخزون
+                        كاملة
+                    </li>
+                    <li><i class="fas fa-check-circle" style="color:#cd7f32; margin-left:10px;"></i> تقارير المبيعات
+                        اليومية
+                    </li>
+                </ul>
+                <a href="https://wa.me/201514179735?text=استفسار%20عن%20الباقة%20البرونزية" target="_blank" class="btn"
+                    style="width: 100%; margin-top: 40px; background: transparent; border: 2px solid #cd7f32; color: #cd7f32;">تواصل
+                    معنا</a>
+            </div>
+
+            <!-- Gold Plan -->
+            <div class="plan-card" data-aos="flip-up"
+                style="border: 2px solid #ffd700; background: rgba(255, 215, 0, 0.08); padding: 40px; border-radius: 20px; flex: 1; min-width: 320px; transform: scale(1.05); z-index: 10; box-shadow: 0 20px 50px rgba(0,0,0,0.5); position: relative;">
+                <div
+                    style="position: absolute; top: 0; left: 0; right: 0; height: 5px; background: #ffd700; box-shadow: 0 0 20px #ffd700;">
+                </div>
+                <div
+                    style="background: #ffd700; color: #000; padding: 8px 20px; border-radius: 0 0 15px 15px; position: absolute; top: 0; left: 50%; transform: translateX(-50%); font-weight: bold; font-size: 0.9rem; box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);">
+                    الأكثر طلباً ⭐</div>
+                <div style="text-align: center; margin-bottom: 30px; margin-top: 15px;">
+                    <div
+                        style="width: 90px; height: 90px; background: rgba(255, 215, 0, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                        <i class="fas fa-crown" style="font-size: 3rem; color: #ffd700;"></i>
+                    </div>
+                    <h3 style="color: #ffd700; font-size: 2.2rem; margin: 0;">Gold</h3>
+                    <p style="color: #aaa;">للمحلات النشطة</p>
+                </div>
+                <div style="font-size: 3rem; font-weight: bold; margin: 20px 0; color:white; text-align:center;">350
+                    <span style="font-size: 1rem; color:#aaa;">ج.م/شهرياً</span>
+                </div>
+                <hr style="border-color: rgba(255,255,255,0.1); margin: 30px 0;">
+                <ul style="list-style:none; padding:0; color: #fff; line-height: 2.5; font-size: 1.1rem;">
+                    <li><i class="fas fa-check-circle" style="color:#ffd700; margin-left:10px;"></i> <strong>5
+                            مستخدمين</strong> (كاشير + مدير)</li>
+                    <li><i class="fas fa-check-circle" style="color:#ffd700; margin-left:10px;"></i> <strong>مزامنة
+                            سحابية
+                            يومية</strong> (Hybrid)</li>
+                    <li><i class="fas fa-check-circle" style="color:#ffd700; margin-left:10px;"></i> لوحة تحكم المالك
+                        (Dashboard)</li>
+                    <li><i class="fas fa-check-circle" style="color:#ffd700; margin-left:10px;"></i> تتبع حركة الأصناف
+                        (Cardex)</li>
+                    <li><i class="fas fa-check-circle" style="color:#ffd700; margin-left:10px;"></i> إضافة لوجو المحل
+                        عالفاتورة</li>
+                    <li><i class="fas fa-check-circle" style="color:#ffd700; margin-left:10px;"></i> دعم فني مخصص
+                        (WhatsApp)
+                    </li>
+                </ul>
+                <a href="https://wa.me/201514179735?text=استفسار%20عن%20الباقة%20الذهبية" target="_blank" class="btn"
+                    style="width: 100%; margin-top: 40px; background: #ffd700; color: #000;">تواصل معنا</a>
+            </div>
+
+            <!-- Diamond Plan -->
+            <div class="plan-card" data-aos="flip-left" data-aos-delay="200"
+                style="border: 1px solid #b9f2ff; background: rgba(185, 242, 255, 0.05); padding: 40px; border-radius: 20px; flex: 1; min-width: 300px; position:relative; overflow:hidden; backdrop-filter: blur(10px);">
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <div
+                        style="width: 80px; height: 80px; background: rgba(185, 242, 255, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                        <i class="far fa-gem" style="font-size: 2.5rem; color: #b9f2ff;"></i>
+                    </div>
+                    <h3 style="color: #b9f2ff; font-size: 2rem; margin: 0;">Diamond</h3>
+                    <p style="color: #aaa;">للشركات الكبرى</p>
+                </div>
+                <div style="font-size: 2.5rem; font-weight: bold; margin: 20px 0; color:white; text-align:center;">700
+                    <span style="font-size: 1rem; color:#aaa;">ج.م/شهرياً</span>
+                </div>
+                <hr style="border-color: rgba(255,255,255,0.1); margin: 30px 0;">
+                <ul style="list-style:none; padding:0; color: #e2e8f0; line-height: 2.5; font-size: 1.1rem;">
+                    <li><i class="fas fa-check-circle" style="color:#b9f2ff; margin-left:10px;"></i> <strong>مستخدمين
+                            بلا
+                            حدود</strong></li>
+                    <li><i class="fas fa-check-circle" style="color:#b9f2ff; margin-left:10px;"></i> <strong>مزامنة
+                            لحظية
+                            كاملة</strong> (Real-time)</li>
+                    <li><i class="fas fa-check-circle" style="color:#b9f2ff; margin-left:10px;"></i> تعدد الفروع
+                        (Multi-Branch)</li>
+                    <li><i class="fas fa-check-circle" style="color:#b9f2ff; margin-left:10px;"></i> تصدير البيانات
+                        (Excel/PDF)</li>
+                    <li><i class="fas fa-check-circle" style="color:#b9f2ff; margin-left:10px;"></i> نسخ احتياطي تلقائي
+                        للسحابة</li>
+                    <li><i class="fas fa-check-circle" style="color:#b9f2ff; margin-left:10px;"></i> دعم فني ذو أولوية
+                        (Priority)</li>
+                    <li><i class="fas fa-check-circle" style="color:#b9f2ff; margin-left:10px;"></i> تدريب وتجهيز مجاني
+                        (Free)</li>
+                </ul>
+                <a href="https://wa.me/201514179735?text=استفسار%20عن%20الباقة%20الماسية" target="_blank" class="btn"
+                    style="width: 100%; margin-top: 40px; background: transparent; border: 2px solid #b9f2ff; color: #b9f2ff;">تواصل
+                    معنا</a>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const UPDATE_API_URL = "https://drfat7y.github.io/Update/version.json";
+
+            try {
+                // Fetch dynamic links
+                const response = await fetch(UPDATE_API_URL + '?t=' + new Date().getTime());
+                if (response.ok) {
+                    const data = await response.json();
+
+                    // Update Windows Button
+                    if (data.windows && data.windows.download_url) {
+                        document.getElementById('btn-download-windows').href = data.windows.download_url;
+                    }
+
+                    // Update Android Button
+                    if (data.android && data.android.download_url) {
+                        document.getElementById('btn-download-android').href = data.android.download_url;
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to fetch download links:', error);
+            }
+        });
+    </script>
+
+    <footer>
+        <p>&copy; 2026 EZ-Store Systems. جميع الحقوق محفوظة.</p>
+        <div style="margin-top: 10px;">
+            <a href="https://drfat7y.github.io/Terms/Privacy.html" target="_blank">سياسة الخصوصية</a>
+            <a href="https://drfat7y.github.io/Terms/Terms.html" target="_blank">شروط الاستخدام</a>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/201514179735" target="_blank" style="
+        position: fixed;
+        bottom: 25px;
+        left: 25px;
+        width: 60px;
+        height: 60px;
+        background-color: #25d366;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        font-size: 32px;
+        z-index: 9999;
+        transition: transform 0.3s;
+        text-decoration: none;
+    " onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+</body>
+
+</html>
